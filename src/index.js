@@ -25,7 +25,8 @@ function calcButtonListener(e) {
     let resultPreview = '';
     try {
         resultPreview = input.numberNormalize(input.eval());
-    } catch (e){}
+    } catch (e) {
+    }
     console.log(input.input);
 
     calcInputElem.textContent = input.toString();
@@ -33,9 +34,10 @@ function calcButtonListener(e) {
 
     e.stopPropagation();
 }
+
 calcKeysElem.addEventListener('click', calcButtonListener);
 
-function notify(text, duration=3000) {
+function notify(text, duration = 3000) {
     const notification = document.createElement('div');
     notification.className = 'notification';
     notification.textContent = text;
@@ -70,5 +72,63 @@ themeChk.addEventListener('change', () => {
     } else {
         document.body.classList.replace('dark', 'light');
         localStorage.setItem('theme', 'light');
+    }
+})
+
+const operatorButtons = {
+    'clear': document.querySelector('button[data-operator=\'clear\']'),
+    'leftParen':document.querySelector('button[data-operator=\'left-paren\']'),
+    'rightParen': document.querySelector('button[data-operator=\'right-paren\']'),
+    'divide': document.querySelector('button[data-operator=\'divide\']'),
+    'multiply': document.querySelector('button[data-operator=\'multiply\']'),
+    'add': document.querySelector('button[data-operator=\'add\']'),
+    'subtract': document.querySelector('button[data-operator=\'subtract\']'),
+    'reset': document.querySelector('button[data-operator=\'reset\']'),
+    'dot': document.querySelector('button[data-operator=\'dot\']'),
+    'evaluate': document.querySelector('button[data-operator=\'evaluate\']')
+}
+
+window.addEventListener('keydown', (e) => {
+    const event = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+    });
+
+    if (e.key >= '0' && e.key <= '9') {
+        const numberElem = document.querySelector(`.key-${e.key}`);
+        numberElem.dispatchEvent(event);
+    } else {
+        switch (e.key) {
+            case 'Escape':
+                operatorButtons['reset'].dispatchEvent(event);
+                break;
+            case '(':
+                operatorButtons['leftParen'].dispatchEvent(event);
+                break;
+            case ')':
+                operatorButtons['rightParen'].dispatchEvent(event);
+                break;
+            case 'Backspace':
+                operatorButtons['clear'].dispatchEvent(event);
+                break;
+            case '*':
+                operatorButtons['multiply'].dispatchEvent(event);
+                break;
+            case '/':
+                operatorButtons['divide'].dispatchEvent(event);
+                break;
+            case '+':
+                operatorButtons['add'].dispatchEvent(event);
+                break;
+            case '-':
+                operatorButtons['subtract'].dispatchEvent(event);
+                break;
+            case '.':
+                operatorButtons['dot'].dispatchEvent(event);
+                break;
+            case 'Enter':
+                operatorButtons['evaluate'].dispatchEvent(event);
+                break;
+        }
     }
 })
