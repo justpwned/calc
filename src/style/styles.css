@@ -53,6 +53,9 @@ textarea:focus {
 }
 
 :root {
+    --bg-dark: linear-gradient(to top, #0f2027, #203a43, #2c5364);
+    --bg-light: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+
     --calc-bg-color-light: white;
     --calc-bg-color-dark: hsl(220, 34%, 19%);
 
@@ -70,7 +73,7 @@ textarea:focus {
 }
 
 .light {
-    --bg: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+    --bg: var(--bg-light);
     --theme-toggle-bg: hsl(0, 0%, 94%);
     --calc-bg: var(--calc-bg-color-light);
     --keys-bg: var(--keys-bg-color-light);
@@ -81,7 +84,7 @@ textarea:focus {
 }
 
 .dark {
-    --bg: linear-gradient(to top, #0f2027, #203a43, #2c5364);
+    --bg: var(--bg-dark);
     --theme-toggle-bg: var(--color-accent-green);
     --calc-bg: var(--calc-bg-color-dark);
     --keys-bg: var(--keys-bg-color-dark);

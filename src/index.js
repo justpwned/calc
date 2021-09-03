@@ -2,14 +2,28 @@ import 'normalize.css';
 import './style/styles.css';
 import CalcInput from './calcinput.js';
 
+function notify(text, duration = 3000) {
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = text;
+    document.body.appendChild(notification);
+    requestAnimationFrame(() => {
+        notification.style.opacity = '1';
+    })
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+            notification.parentNode.removeChild(notification);
+        }, 500);
+    }, duration);
+}
+
 const calcKeysElem = document.querySelector('.calc-keys');
 const calcInputElem = document.querySelector('.calc-input');
 const calcResultPreviewElem = document.querySelector('.calc-result-preview');
-
-
 const input = new CalcInput();
 
-function calcButtonListener(e) {
+calcKeysElem.addEventListener('click', e => {
     const target = e.target;
     if (!target.matches('button')) return;
 
@@ -33,28 +47,11 @@ function calcButtonListener(e) {
     calcResultPreviewElem.textContent = resultPreview;
 
     e.stopPropagation();
-}
+});
 
-calcKeysElem.addEventListener('click', calcButtonListener);
 
-function notify(text, duration = 3000) {
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = text;
-    document.body.appendChild(notification);
-    requestAnimationFrame(() => {
-        notification.style.opacity = '1';
-    })
-    setTimeout(() => {
-        notification.style.opacity = '0';
-        setTimeout(() => {
-            notification.parentNode.removeChild(notification);
-        }, 500);
-    }, duration);
-}
 
 const themeChk = document.getElementById('theme-chk');
-
 const theme = localStorage.getItem('theme');
 if (theme) {
     document.body.classList.add(theme);
